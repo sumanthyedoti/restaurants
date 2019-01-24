@@ -47,7 +47,6 @@ router.get('/', (req, res) => {
 
 router.get('/search/:searchText', (req, res) => {
   const searchText = capitalizeFirstLetter(req.params.searchText);
-  console.log(searchText);
   Restaurants.find({
     $or: [
       { name: { $regex: searchText } },
