@@ -51,6 +51,20 @@ const RestaurantsSchema = new Schema({
   has_table_booking: {
     type: Number,
   },
+  location: {
+    city: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    locality_verbose: {
+      type: String,
+    },
+    locality: {
+      type: String,
+    },
+  },
   featured_image: {
     type: String,
   },
