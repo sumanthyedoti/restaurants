@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   border: none;
+  outline: none;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -12,4 +13,87 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.main-header-bg {
+  background: url(./images/zomato.webp) no-repeat center -10px;
+  background-size: cover;
+  min-height: 440px;
+  filter: brightness(70%);
+}
+.logo{
+  margin: auto;
+  width: 120px;
+  border-radius: 4px;
+}
+.logo-container{
+  text-align: center;
+  width: 100%;
+  position: relative;
+  top: -380px;
+}
+#search-ip{
+  position: relative;
+  top: 40px;
+  border-radius: 5px;
+  padding: 0 0 0 10px;
+}
+#search-ip::placeholder{
+  color: grey;
+}
+.header-form input[type='submit']{
+  position: relative;
+  top: 26px;
+  height: 44px;
+  border-radius: 4px;
+}
+.search-ip:focus {
+  border-bottom: none!important;
+  box-shadow: none!important;
+}
+.brand-logo{
+  margin-left: 100px;
+}
+#header-form{
+  display: inline;
+  position: relative;
+  left: 30%;
+}
+#header-form input[type='submit']{
+  width: 80px;
+  border: 1px solid white;
+}
+#header-nav{
+  position: relative;
+  right: 100px;
+}
+#header-search{
+  margin-right: 10px;
+  padding-left: 10px;
+  width: 26%;
+  height: 36px;
+  border-radius: 2px;
+}
+#header-search:focus{
+  border-bottom: none;
+}
+.search-icon{
+  display: inline;
+  position: relative;
+  top: 36px;
+  z-index: 1;
+  left: 0px;
+}
+.restaurants .card{
+  height: calc(25rem - 5vw);
+}
+.restaurants-conatiner{
+  position: relative;
+  top: -260px;
+}
+.card-image{
+  object-fit: fill;
+}
+.card-image img{
+  width: 200px;
+  height: 140px;
 }
