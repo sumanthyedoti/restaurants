@@ -16,7 +16,7 @@ class Restaurants extends Component {
         })
       })
   }
-  render() {
+  render(){
     const { restaurants } = this.state;
     let RestaurantsList = restaurants.map( (restaurant) => {
       return (

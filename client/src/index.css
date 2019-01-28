@@ -88,7 +88,7 @@ code {
 }
 .restaurants-conatiner{
   position: relative;
-  top: -260px;
+  top: -280px;
 }
 .card-image{
   object-fit: fill;
@@ -96,4 +96,101 @@ code {
 .card-image img{
   width: 200px;
   height: 140px;
+}
+#restaurant-card-name{
+  font-size: 24px;
+  display: inline-block;
+  width: 86%;
+}
+.card-image .halfway-fab{
+  position: relative;
+  top: 100px;
+}
+#restaurant-image{
+  width: calc(100% - 10vw);
+  margin: auto;
+}
+#restaurant-image img{
+  width: 100%;
+  height: calc(40% + 10vw);
+}
+#restaurants-body{
+  margin: 0;
+  padding-top: 0;
+}
+#restaurant-rating{
+  position: absolute;
+  right: 0;
+  bottom: -4rem;
+}
+#restaurant-title{
+  width: 80%;
+}
+.restaurant-details{
+  display: flex;
+
+}
+.restaurant-info-title{
+  width: 200px;
+  display: inline-block;
+}
+.restaurant-info {
+  display: inline-block;
+  width: 100%;
+}
+.restaurant-details-div{
+  margin: 20px 0;
+}
+.restaurant-action-div{
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+.restaurant-action-div button{
+  width: 200px;
+  height: 40px;
+}
+#modal-image-container{
+  padding-left: 10px;
+}
+#restaurant-modal-img{
+  min-width: 160px;
+  max-width: 220px;
+  /* height: 20vw; */
+}
+#restuarant-modal-form{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+#restuarant-modal-form div{
+  width: 220px;
+  margin: 0 10px;
+}
+#restuarant-modal-form input{
+  width: 200px;
+}
+#restuarant-modal-form input:focus{
+  border-bottom: none;
+}
+#restaurant-form-button{
+  position: relative;
+  top: 20px;
+  width: 140px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+#book-table-modal{
+  min-height: 70%;
+  max-height: 88%;
+  padding-bottom: 40px;
+  overflow: auto;
+}
+#booking-card-content{
+  padding-top: 0;
+  /* margin: 0; */
+}
+.booking-info span{
+  color: hsl(0, 0%, 40%);
+  font-weight: bold;
 }

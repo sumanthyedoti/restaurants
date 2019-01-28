@@ -64,5 +64,18 @@ router.get('/search/:searchText', (req, res) => {
     });
 });
 
+router.get('/search/:id', (req, res) => {
+  const id = capitalizeFirstLetter(req.params.id);
+  Restaurants.find({ id })
+    .then((restaurant) => {
+      res.json({
+        restaurant,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 
 module.exports = router;

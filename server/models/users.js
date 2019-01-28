@@ -73,6 +73,7 @@ const UsersSchema = new Schema({
       type: [{
         idRestaurant: {
           type: String,
+          required: true,
         },
         time_and_date: {
           type: String,
@@ -80,9 +81,11 @@ const UsersSchema = new Schema({
         items: [{
           name: {
             type: String,
+            required: true,
           },
           count: {
             type: Number,
+            required: true,
           },
         }],
       }],

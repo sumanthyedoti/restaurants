@@ -30,17 +30,16 @@ router.get('/', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).send({
+        errorMessage: 'Invalid request',
+      });
     });
 });
-const booktable = {
-  restaurant: '2900',
-  time_and_date: 'tomorrow',
-  num_of_people: 4,
-};
+
 
 router.post('/', (req, res) => {
   const { username } = req.headers;
-  Users.updateOne({ username }, { $push: { 'bookings.table': booktable } })
+  Users.updateOne({ username }, { $push: { 'bookings.table': req.body } })
     .then((result) => {
       if (result.nModified === 1) {
         res.send({
@@ -50,6 +49,9 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).send({
+        errorMessage: 'Invalid request',
+      });
     });
 });
 
