@@ -50,9 +50,9 @@ code {
   border-bottom: none!important;
   box-shadow: none!important;
 }
-.brand-logo{
+/* .brand-logo{
   margin-left: 100px;
-}
+} */
 #header-form{
   display: inline;
   position: relative;
@@ -62,10 +62,10 @@ code {
   width: 80px;
   border: 1px solid white;
 }
-#header-nav{
+/* #header-nav{
   position: relative;
   right: 100px;
-}
+} */
 #header-search{
   margin-right: 10px;
   padding-left: 10px;
@@ -100,11 +100,11 @@ code {
 #restaurant-card-name{
   font-size: 24px;
   display: inline-block;
-  width: 86%;
+  margin-top: 10px;
 }
 .card-image .halfway-fab{
   position: relative;
-  top: 100px;
+  top: 96px;
 }
 #restaurant-image{
   width: calc(100% - 10vw);

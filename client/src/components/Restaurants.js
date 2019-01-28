@@ -1,23 +1,8 @@
 import React, { Component } from 'react';
 import RestaurantCard from './RestaurantCard';
 class Restaurants extends Component {
-  constructor(){
-    super();
-    this.state = {
-      restaurants : [],
-    }
-  }
-  componentDidMount(){
-    fetch('http://localhost:3000/api/restaurants/')
-      .then((res)=> res.json())
-      .then((json) => {
-        this.setState({
-          restaurants: json.restaurants,
-        })
-      })
-  }
   render(){
-    const { restaurants } = this.state;
+    const { restaurants } = this.props
     let RestaurantsList = restaurants.map( (restaurant) => {
       return (
         <RestaurantCard 
