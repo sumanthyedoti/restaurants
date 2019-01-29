@@ -61,7 +61,7 @@ const BookTable = (props) => {
             <input type="time" className='validate' id='table-time' name="table-time" min="9:00" max="22:00" required/>
           </div>
         </form>
-        <div className='card-action right'>
+        <div className='card-action right '>
           <input 
             className='btn red lighten-1 right' 
             onClick={props.bookTableHandler}

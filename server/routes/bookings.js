@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.use((req, res, next) => {
   const { username } = req.headers;
-  console.log(username);
   Users.findOne({ username }).then((user) => {
     if (!user) {
       res.status(404).send({

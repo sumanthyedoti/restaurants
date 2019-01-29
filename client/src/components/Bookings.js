@@ -30,7 +30,6 @@ class Bookings extends Component {
           })
             .then((res)=> res.json())
             .then((json) => {
-              console.log(json.restaurant);
               let restaurants = this.state.restaurants;
               restaurants[booking.idRestaurant] = json.restaurant
               this.setState({
@@ -79,7 +78,20 @@ class Bookings extends Component {
       <div className="main">
         <Header />
         <div className='container'>
-          {BookingsList}
+          <h4 className='grey-text text-darken-1'>Tables Booked</h4>
+          {bookings.length===0 ?
+            (
+            <>
+            <div className='center section grey-text valign-wrapper' id='no-bookings-div'>
+              <h1>There are no tables booked yet!!</h1>
+            </div>
+            </>
+            )
+            :
+            (
+              <div className=''>{BookingsList}</div>
+            )
+          }
         </div>
       </div>
     );

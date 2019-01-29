@@ -41,6 +41,27 @@ const UsersSchema = new Schema({
       message: 'Please use valid Email!',
     },
   },
+  address: {
+    type: String,
+    minlength: 10,
+    trim: true,
+    validate: {
+      validator(Address) {
+        return (Address.length === 10 || Address.length === 0);
+      },
+      message: 'Address is too short!',
+    },
+  },
+  phoneNumber: {
+    type: String,
+    trim: true,
+    validate: {
+      validator(phone) {
+        return (phone.length === 10 || phone.length === 0);
+      },
+      message: 'Invalid Phone number!',
+    },
+  },
   favorites: {
     type: [{
       type: String,

@@ -39,13 +39,14 @@ class RestaurantCard extends Component {
     const tableTime = formData.elements['table-time'].value;
     if(tableDate==='' || tableTime ==='' || numOfGuests===null||numOfGuests===''){
       window.Materialize.toast('Fill all the fileds correctly!', 2000);
-      e.stopPropagation();
+      return false;
+    } else if (numOfGuests > 20 || numOfGuests <1){
+      window.Materialize.toast('Maximum of 20 people!', 2000);
       return false;
     }
     fetch(`http://localhost:3000/api/bookings`, {
       method: 'POST',
       mode: "cors", 
-      credentials: "same-origin",
       headers: {
           "Content-Type": "application/json",
           "username": 'y_sumanth',
@@ -79,8 +80,8 @@ class RestaurantCard extends Component {
       <div className='container'>
         <div className='card'>
           <div className='card-image' id='restaurant-image'>
-            <img src={restaurant.featured_image} alt='' />
-            <button className="btn" id='restaurant-rating' style={{'backgroundColor': '#'+restaurant.user_rating.rating_color}}>{ restaurant.user_rating.aggregate_rating}</button>
+            <img src={restaurant.featured_image} alt='' className='responsive-img' />
+            <span className="btn-flat white-text" id='restaurant-rating' style={{'backgroundColor': '#'+restaurant.user_rating.rating_color}}>{ restaurant.user_rating.aggregate_rating}</span>
           </div>
           <div className='card-content' id='restaurants-body'>
             <h4 id='restaurant-title'>{restaurant.name}</h4>

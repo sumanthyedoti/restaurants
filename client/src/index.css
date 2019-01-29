@@ -50,9 +50,9 @@ code {
   border-bottom: none!important;
   box-shadow: none!important;
 }
-/* .brand-logo{
-  margin-left: 100px;
-} */
+.brand-logo{
+  /* margin-left: -100px; */
+}
 #header-form{
   display: inline;
   position: relative;
@@ -64,7 +64,7 @@ code {
 }
 /* #header-nav{
   position: relative;
-  right: 100px;
+  right: -60px;
 } */
 #header-search{
   margin-right: 10px;
@@ -84,35 +84,35 @@ code {
   left: 0px;
 }
 .restaurants .card{
-  height: calc(25rem - 5vw);
+  height: calc(24rem - ( 2vw * 1.2) );
 }
+
 .restaurants-conatiner{
   position: relative;
   top: -280px;
 }
-.card-image{
+/* .card-image{
   object-fit: fill;
-}
+} */
 .card-image img{
+  margin-top: 10px;
   width: 200px;
   height: 140px;
 }
-#restaurant-card-name{
-  font-size: 24px;
-  display: inline-block;
-  margin-top: 10px;
+#card-info{
+  margin: 0;
+  padding: 0;
+}
+#card-info span{
+  display: block;
 }
 .card-image .halfway-fab{
   position: relative;
   top: 96px;
 }
-#restaurant-image{
-  width: calc(100% - 10vw);
-  margin: auto;
-}
 #restaurant-image img{
-  width: 100%;
-  height: calc(40% + 10vw);
+  /* width: 100%; */
+  max-height: 400px;
 }
 #restaurants-body{
   margin: 0;
@@ -120,7 +120,7 @@ code {
 }
 #restaurant-rating{
   position: absolute;
-  right: 0;
+  right: 30px;
   bottom: -4rem;
 }
 #restaurant-title{
@@ -145,6 +145,10 @@ code {
   display: flex;
   justify-content: space-around;
   margin: 20px 0;
+  flex-wrap: wrap;
+}
+.restaurant-action-div a{
+  margin-bottom: 20px;
 }
 .restaurant-action-div button{
   width: 200px;
@@ -160,15 +164,13 @@ code {
 }
 #restuarant-modal-form{
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 #restuarant-modal-form div{
-  width: 220px;
+  width: 240px;
   margin: 0 10px;
-}
-#restuarant-modal-form input{
-  width: 200px;
+  flex-shrink: 0;
 }
 #restuarant-modal-form input:focus{
   border-bottom: none;
@@ -186,6 +188,9 @@ code {
   padding-bottom: 40px;
   overflow: auto;
 }
+#no-bookings-div{
+  height: 60vh;
+}
 #booking-card-content{
   padding-top: 0;
   /* margin: 0; */
@@ -193,4 +198,11 @@ code {
 .booking-info span{
   color: hsl(0, 0%, 40%);
   font-weight: bold;
+}
+#dp{
+  width: 180px;
+  height: 180px;
+}
+.character-counter{
+  display: none;
 }

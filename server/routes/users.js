@@ -46,4 +46,18 @@ router.get('/:username', (req, res) => {
   });
 });
 
+router.put('/update', (req, res) => {
+  const { username } = req.headers;
+  Users.updateOne({ username }, { $set: req.body })
+    .then((response) => {
+      res.send({
+        message: 'User data updated successfully!',
+        response,
+      });
+    }).catch((err) => {
+      res.status(404).send(err);
+      res.end();
+    });
+});
+
 module.exports = router;
