@@ -54,7 +54,7 @@ const BookTable = (props) => {
           </div>
           <div className="">
           <label htmlFor="num-of-guests">Number of guests</label>
-            <input className='validate' type="number" id='num-of-guests' name="num-of-guests" min="1" max="20" className='validate' required/>
+            <input className='validate' type="number" id='num-of-guests' name="num-of-guests" min="1" max="20" required/>
           </div>
           <div className="">
             <label htmlFor="table-time">Select Time</label>

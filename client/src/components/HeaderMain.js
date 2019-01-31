@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from './Header';
 
 const HeaderMain = (props) => {
   const { searchHandler } = props;
   return (
     <>
-    <Header mainHeader= {true}/>
     <div className='main-header-bg'> </div>
     <div className='logo-container'>
       <img className='center logo' src='images/logo.svg' alt='logo'/>

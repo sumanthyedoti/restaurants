@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import BookTable from './BookTable';
-import { NavLink } from 'react-router-dom';
-import {Toast} from 'react-materialize';
 
 class RestaurantCard extends Component {
   constructor(props){
@@ -16,6 +13,10 @@ class RestaurantCard extends Component {
     }
   }
   handleOpen = () => {
+    if(!this.props.isSignedIn){
+      window.Materialize.toast('Please login!', 1000);
+      return false;
+    }
     this.setState({ open: true });
   };
 
@@ -49,7 +50,7 @@ class RestaurantCard extends Component {
       mode: "cors", 
       headers: {
           "Content-Type": "application/json",
-          "username": 'y_sumanth',
+          "username": localStorage.getItem('username'),
       },
       body: JSON.stringify({
         "idRestaurant": this.state.restaurant.id,
@@ -76,7 +77,6 @@ class RestaurantCard extends Component {
     const { restaurant } = this.state;
     return (
       <>
-      <Header />
       <div className='container'>
         <div className='card'>
           <div className='card-image' id='restaurant-image'>

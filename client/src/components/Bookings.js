@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import Header from './Header';
 class Bookings extends Component {
   constructor(){
     super();
@@ -13,7 +12,7 @@ class Bookings extends Component {
     fetch('http://localhost:3000/api/bookings/', {
       headers: {
         "Content-Type": "application/json",
-        "username": 'y_sumanth',
+        "username": localStorage.getItem('username'),
       }
     })
       .then((res)=> res.json())
@@ -25,7 +24,7 @@ class Bookings extends Component {
           fetch(`http://localhost:3000/api/restaurants/${booking.idRestaurant}`, {
             headers: {
               "Content-Type": "application/json",
-              "username": 'y_sumanth',
+              "username": localStorage.getItem('username'),
             }
           })
             .then((res)=> res.json())
@@ -76,7 +75,6 @@ class Bookings extends Component {
     }); 
     return (
       <div className="main">
-        <Header />
         <div className='container'>
           <h4 className='grey-text text-darken-1'>Tables Booked</h4>
           {bookings.length===0 ?

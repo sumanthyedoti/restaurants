@@ -49,6 +49,7 @@ class Home extends Component {
       <div className="main">
         <HeaderMain 
           searchHandler = { this.searchHandler }
+          isSignedIn = { this.props.isSignedIn}
         />
         <Restaurants restaurants = {this.state.searchReasult} />
       </div>
