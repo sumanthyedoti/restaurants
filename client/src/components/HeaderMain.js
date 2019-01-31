@@ -1,5 +1,15 @@
 import React from 'react';
 
+const debounce = (func, delay) => { 
+	let debounceTimer
+	return function() { 
+		const context = this;
+		const args = arguments; 
+    clearTimeout(debounceTimer); 
+    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+	} 
+}
+
 const HeaderMain = (props) => {
   const { searchHandler } = props;
   return (
@@ -15,10 +25,10 @@ const HeaderMain = (props) => {
               className='white search-ip' 
               id="search-ip" type='text' 
               placeholder='search for reastaurants or cuisines or location...'
-              onKeyUp = {searchHandler}/>
+              onKeyUp = {debounce(searchHandler, 1000)}/>
           </div>
           <div className='col s11 m2 push-m2 input-field'>
-            <input type='submit' className='btn red darken-2' onClick = {searchHandler} />
+            <input type='submit' className='btn red darken-2' onClick = {(e)=>{e.preventDefault()}} />
           </div>
         </form>
       </div>

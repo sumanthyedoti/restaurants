@@ -10,14 +10,12 @@ class Home extends Component {
     }
   }
   searchHandler=(e)=>{
-    e.preventDefault();
+    // e.preventDefault();
     const searchField = document.getElementById('search-form').elements[0];
     if(searchField.value.length===0){
       this.setState({
         searchReasult: this.state.restaurants,
       });
-    }else if(e.type==='keyup'){
-      return false;
     }
     if(searchField.value.length>1){
       fetch(`http://localhost:3000/api/restaurants/search/${searchField.value}`)

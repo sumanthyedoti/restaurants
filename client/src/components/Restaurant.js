@@ -33,6 +33,22 @@ class RestaurantCard extends Component {
         })
       })
   }
+  componentDidUpdate(){
+    if(this.state.open){
+      var time = new Date();
+      console.log("actual time:", time);
+      time.setHours(time.getHours() + 1)
+      time = time.getHours()+":"+time.getMinutes();
+      var date = new Date().toJSON().slice(0,10);
+      console.log(date);
+      const bookingForm = document.getElementById('restuarant-modal-form');
+      if(bookingForm){
+        bookingForm.elements['table-date'].value = date;
+        bookingForm.elements['num-of-guests'].value = 1;
+        bookingForm.elements['table-time'].value = time;
+      }
+    }
+  }
   bookTableHandler=(e)=>{
     const formData = document.getElementById('restuarant-modal-form');
     const tableDate = formData.elements['table-date'].value;
