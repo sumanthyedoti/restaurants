@@ -172,8 +172,18 @@ code {
   margin: 0 10px;
   flex-shrink: 0;
 }
+.card-text{
+  position: absolute;
+}
 #restuarant-modal-form input:focus{
   border-bottom: none;
+}
+#restaurant-card-name{
+  font-size: 1.6rem;
+}
+#card-rating{
+  position: relative;
+  top: -4px;
 }
 #restaurant-form-button{
   position: relative;
@@ -205,4 +215,13 @@ code {
 }
 .character-counter{
   display: none;
+}
+.profile-display{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logout-btn{
+  width: 160px;
+  margin: 30px 10px;
 }

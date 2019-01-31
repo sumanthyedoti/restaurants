@@ -11,10 +11,12 @@ const RestaurantCard = (props) => {
         </div>
         <div className='card-content black-text' id='card-info'>
           <span className="badge white-text" id='card-rating' style={{'backgroundColor': '#'+restaurant.user_rating.rating_color, 'marginTop':'10px'}}>{ restaurant.user_rating.aggregate_rating}</span>
-          <h4 id='restaurant-card-name' className='card-title red-text text-darken-4'>{restaurant.name}</h4>
+          <h5 id='restaurant-card-name' className='card-title red-text text-darken-4'>{restaurant.name}</h5>
+          <div className='card-text'>
             <span>{restaurant.location.locality_verbose}</span>
             <p className='divider'></p>
             <span>{restaurant.cuisines}</span>
+          </div>
         </div>
       </div>
     </NavLink>

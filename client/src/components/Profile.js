@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import dp from '../images/dp.png'
+import {Redirect} from 'react-router-dom';
+import firebase from 'firebase';
+
+import dp from '../images/dp.png';
 const styles = {
   profileSection:{
     marginTop: '40px',
@@ -14,10 +16,11 @@ class Profile extends Component {
     }
   }
   componentDidMount(){
-    fetch(`http://localhost:3000/api/user/y_sumanth`, {
+    let username = localStorage.getItem('username');
+    fetch(`http://localhost:3000/login/${username}`, {
       headers: {
         "Content-Type": "application/json",
-        "username": 'y_sumanth',
+        "username": username,
       }
     })
       .then((res) => res.json())
@@ -30,6 +33,7 @@ class Profile extends Component {
         profileForm.elements['name'].focus();
         profileForm.elements['email'].value = json.user.email;
         profileForm.elements['email'].focus();
+        profileForm.elements['email'].disabled = true;
         if(json.user.address){
           profileForm.elements['address'].value = json.user.address;
           profileForm.elements['address'].focus();
@@ -43,13 +47,13 @@ class Profile extends Component {
         console.error('error');
       })
   }
-  submitHandler(e){
+  submitHandler=(e)=>{
     e.preventDefault();
     const profileForm = document.getElementById('profile-form');
     const email = profileForm.elements['email'].value.trim();
     const phone = profileForm.elements['phone'].value.trim();
     const address = profileForm.elements['address'].value.trim();
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isEmail = re.test(email);
     if(!isEmail){
       window.Materialize.toast('Not a valid email!', 4000);
@@ -75,12 +79,15 @@ class Profile extends Component {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "username": 'y_sumanth',
+        "username": localStorage.getItem('username'),
       },
       body: JSON.stringify(profileObj),
     })
     .then((res) => {
-      console.log(res);
+      let profile = this.state.profile;
+      profile.name = profileObj.name;
+      console.log(profile)
+      this.setState({profile});
       window.Materialize.toast('Updated user data successfully!', 2000);
     })
     .catch((err)=> {
@@ -94,14 +101,27 @@ class Profile extends Component {
       e.target.value = ph.substring(0, ph.length-1);
     }
   }
+  logoutHandler(){
+    firebase.auth().signOut();
+    localStorage.removeItem('username');
+  }
   render() {
+    const {isSignedIn} = this.props; 
     return (
       <div className="main">
-        <Header />
+        {!isSignedIn ?
+        (<Redirect to='/home'/>)
+        :
+        null
+        }
         <div className='container section' style={styles.profileSection}>
           <div className='row'>
-            <div className='col s12 m4 profile-picture'>
-              <img src={dp} id='dp' alt='profile' />
+            <div className='col s10 m4 profile-picture'>
+             <div className='profile-display'>
+              <img className='' src={dp} id='dp' alt='profile' />
+              <h4 className='center red-text text-lighten-1'>{this.state.profile.name}</h4>
+              <button onClick={this.logoutHandler} className='btn red darken-2 logout-btn'>Logout<i class="material-icons right">logout</i></button>
+             </div>
             </div>
             <div className='col s12 m8 profile-info'>
               <form id='profile-form'>
@@ -112,7 +132,7 @@ class Profile extends Component {
                 </div>
                 <div className="input-field">
                   <i className="material-icons prefix grey-text text-darken-1">email</i>
-                  <input type="email" className="validate" id="email" required/>
+                  <input type="email" className="" id="email" required/>
                   <label htmlFor="email" >Email</label>
                 </div>
                 <div className="input-field">
