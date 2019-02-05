@@ -1,45 +1,23 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import {fetchBookingsAction} from '../store/actions/bookingsAction';
+import {fetchRestaurantsBookedAction} from '../store/actions/bookingsAction';
+
+import {connect} from 'react-redux';
+
 class Bookings extends Component {
-  constructor(){
-    super();
-    this.state = {
-      bookings : [],
-      restaurants: {},
+  componentDidMount(){
+    this.props.fetchBookings();
+  }
+  componentDidUpdate(){
+    if(this.props.bookings.length>0){
+      this.props.bookings.forEach(booking => {
+        this.props.fetchRestaurantsBooked(booking.idRestaurant);
+      });
     }
   }
-  componentDidMount(){
-    fetch('http://localhost:3000/api/bookings/', {
-      headers: {
-        "Content-Type": "application/json",
-        "username": localStorage.getItem('username'),
-      }
-    })
-      .then((res)=> res.json())
-      .then((json) => {
-        this.setState({
-          bookings: json.bookings.table,
-        })
-        json.bookings.table.forEach(booking => {
-          fetch(`http://localhost:3000/api/restaurants/${booking.idRestaurant}`, {
-            headers: {
-              "Content-Type": "application/json",
-              "username": localStorage.getItem('username'),
-            }
-          })
-            .then((res)=> res.json())
-            .then((json) => {
-              let restaurants = this.state.restaurants;
-              restaurants[booking.idRestaurant] = json.restaurant
-              this.setState({
-                restaurants,
-              })
-            })
-        });
-      })
-  }
   render() {
-    const { bookings, restaurants } = this.state;
+    const { bookings, restaurants} = this.props;
     let BookingsList = bookings.map( (booking) => {
       const dateTime = booking.time_and_date.split('&');
       return(
@@ -95,4 +73,14 @@ class Bookings extends Component {
     );
   }
 }
-export default Bookings;
+const mapStateToProps = (state) =>{
+  return {
+    bookings: state.reducedBookings.bookings,
+    restaurants: state.reducedBookings.restaurants,
+  }
+}
+const mapActionsToProps=({
+  fetchBookings: fetchBookingsAction,
+  fetchRestaurantsBooked: fetchRestaurantsBookedAction
+})
+export default connect(mapStateToProps, mapActionsToProps)(Bookings);

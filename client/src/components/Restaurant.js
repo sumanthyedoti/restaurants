@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import BookTable from './BookTable';
+import {fetchRestaurantAction} from '../store/actions/restaurantActions';
+import {bookingTableAction} from '../store/actions/bookingsAction';
+import {connect} from 'react-redux';
 
 class RestaurantCard extends Component {
   constructor(props){
     super(props);
     this.state = {
-      restaurant : {
-        location: {},
-        user_rating: {},
-      },
       open: false,
     }
   }
@@ -25,22 +24,14 @@ class RestaurantCard extends Component {
   };
   componentDidMount(){
     const { id } = this.props.match.params;
-    fetch(`http://localhost:3000/api/restaurants/${id}`)
-      .then((res)=> res.json())
-      .then((json) => {
-        this.setState({
-          restaurant: json.restaurant,
-        })
-      })
+    this.props.fetchRestaurant(id);
   }
   componentDidUpdate(){
     if(this.state.open){
       var time = new Date();
-      console.log("actual time:", time);
       time.setHours(time.getHours() + 1)
       time = time.getHours()+":"+time.getMinutes();
       var date = new Date().toJSON().slice(0,10);
-      console.log(date);
       const bookingForm = document.getElementById('restuarant-modal-form');
       if(bookingForm){
         bookingForm.elements['table-date'].value = date;
@@ -61,36 +52,27 @@ class RestaurantCard extends Component {
       window.Materialize.toast('Maximum of 20 people!', 2000);
       return false;
     }
-    fetch(`http://localhost:3000/api/bookings`, {
-      method: 'POST',
-      mode: "cors", 
-      headers: {
-          "Content-Type": "application/json",
-          "username": localStorage.getItem('username'),
-      },
-      body: JSON.stringify({
-        "idRestaurant": this.state.restaurant.id,
-        "time_and_date": `${tableDate}&${tableTime}`,
-        "num_of_people": numOfGuests
-      })
-    })
-      .then((res) =>{
-        console.log(res);
+    let bookingObj = {
+      "idRestaurant": this.props.restaurant.id,
+      "time_and_date": `${tableDate}&${tableTime}`,
+      "num_of_people": numOfGuests
+    }
+    this.props.bookTable(bookingObj)
+      .then(data=>{
         this.setState((state)=>({
           open: !state.open
         }));
         window.Materialize.toast('Booked the table successfully!', 4000);
       })
-      .catch((err) => {
-        console.err(err);
+      .catch(err => {
         window.Materialize.toast('Fill all the fileds correctly!', 4000);
-      });
+      })
     formData.elements['table-date'].value='';
     formData.elements['num-of-guests'].value='';
     formData.elements['table-time'].value='';
   }
   render(){
-    const { restaurant } = this.state;
+    const { restaurant } = this.props;
     return (
       <>
       <div className='container'>
@@ -123,7 +105,7 @@ class RestaurantCard extends Component {
                 <a href='#book-table'><button onClick={this.handleOpen} className='btn red lighten-1'>Book Table</button></a>
               </div>
               <BookTable 
-                restaurant = {restaurant} 
+                restaurant = {restaurant}
                 open = {this.state.open}
                 handleClose = {this.handleClose}
                 handleOpen = {this.handleOpen}  
@@ -137,4 +119,14 @@ class RestaurantCard extends Component {
     );
   }
 }
-export default RestaurantCard;
+
+const mapStateToProps = (state) =>{
+  return {
+    restaurant: state.reducedRestaurants.restaurant,
+  }
+}
+const mapActionsToProps=({
+  fetchRestaurant: fetchRestaurantAction,
+  bookTable: bookingTableAction
+})
+export default connect(mapStateToProps, mapActionsToProps)(RestaurantCard);

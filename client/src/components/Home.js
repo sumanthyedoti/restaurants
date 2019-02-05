@@ -1,57 +1,53 @@
 import React, { Component } from 'react';
 import HeaderMain from './HeaderMain';
 import Restaurants from './Restaurants';
+import {fetchRestaurantsAction, searchRestaurantsAction, nullSearchAction} from '../store/actions/restaurantActions';
+import {connect} from 'react-redux';
+
 class Home extends Component {
-  constructor(){
-    super();
-    this.state = {
-      restaurants : [],
-      searchReasult: [],
-    }
-  }
   searchHandler=(e)=>{
     // e.preventDefault();
     const searchField = document.getElementById('search-form').elements[0];
     if(searchField.value.length===0){
-      this.setState({
-        searchReasult: this.state.restaurants,
-      });
+        this.props.nullSearch();
     }
-    if(searchField.value.length>1){
-      fetch(`http://localhost:3000/api/restaurants/search/${searchField.value}`)
-      .then((res)=> res.json())
-      .then((json) => {
-        console.log(json.restaurants)
-        if(json.restaurants.length===0) {
+    if(searchField.value.length > 1){
+      this.props.searchRestaurants(searchField.value)
+      .then((data)=>{
+        if(data.restaurants.length===0){
           window.Materialize.toast(`No results for '${searchField.value}'`, 2000);
           return false;
         }
-        this.setState({
-          searchReasult: json.restaurants,
-        });
       })
+      .catch(err => console.log('error in search'));
     }
   }
   componentDidMount(){
-    fetch('http://localhost:3000/api/restaurants/')
-      .then((res)=> res.json())
-      .then((json) => {
-        this.setState({
-          restaurants: json.restaurants,
-          searchReasult: json.restaurants,
-        })
-      })
+    this.props.fetchRestaurants();
   }
   render() {
+    const restaurants = this.props.searchReasult
     return (
       <div className="main">
         <HeaderMain 
           searchHandler = { this.searchHandler }
           isSignedIn = { this.props.isSignedIn}
         />
-        <Restaurants restaurants = {this.state.searchReasult} />
+        <Restaurants restaurants = {restaurants} />
       </div>
     );
   }
 }
-export default Home;
+const mapStateToProps = (state) =>{
+  return {
+    restaurants: state.reducedRestaurants.restaurants,
+    searchReasult: state.reducedRestaurants.searchReasult,
+  }
+}
+const mapActionsToProps=({
+  fetchRestaurants: fetchRestaurantsAction,
+  searchRestaurants: searchRestaurantsAction,
+  nullSearch: nullSearchAction,
+  
+})
+export default connect(mapStateToProps, mapActionsToProps)(Home);

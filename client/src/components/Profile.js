@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import firebase from 'firebase';
-
+import {getProfileAction} from '../store/actions/userAction';
+import {connect} from 'react-redux';
 import dp from '../images/dp.png';
 const styles = {
   profileSection:{
@@ -9,41 +10,27 @@ const styles = {
   }
 }
 class Profile extends Component {
-  constructor(){
-    super();
-    this.state = {
-      profile: {},
-    }
-  }
   componentDidMount(){
     let username = localStorage.getItem('username');
-    fetch(`http://localhost:3000/login/${username}`, {
-      headers: {
-        "Content-Type": "application/json",
-        "username": username,
-      }
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          profile: json.user,
-        })
+    this.props.getProfile(username)
+      .then((res) => {
+        const {profile} = this.props;
         const profileForm = document.getElementById('profile-form');
-        profileForm.elements['name'].value = json.user.name;
+        profileForm.elements['name'].value = profile.name;
         profileForm.elements['name'].focus();
-        profileForm.elements['email'].value = json.user.email;
+        profileForm.elements['email'].value = profile.email;
         profileForm.elements['email'].focus();
         profileForm.elements['email'].disabled = true;
-        if(json.user.address){
-          profileForm.elements['address'].value = json.user.address;
+        if(profile.address){
+          profileForm.elements['address'].value = profile.address;
           profileForm.elements['address'].focus();
         }
-        if(json.user.phoneNumber){
-          profileForm.elements['phone'].value = json.user.phoneNumber;
+        if(profile.phoneNumber){
+          profileForm.elements['phone'].value = profile.phoneNumber;
           profileForm.elements['phone'].focus();
         }
       })
-      .catch((err) => {
+      .catch((err)=>{
         console.error('error');
       })
   }
@@ -84,7 +71,7 @@ class Profile extends Component {
       body: JSON.stringify(profileObj),
     })
     .then((res) => {
-      let profile = this.state.profile;
+      let profile = this.props.profile;
       profile.name = profileObj.name;
       console.log(profile)
       this.setState({profile});
@@ -107,6 +94,7 @@ class Profile extends Component {
   }
   render() {
     const {isSignedIn} = this.props; 
+    const {profile} = this.props;
     return (
       <div className="main">
         {!isSignedIn ?
@@ -127,7 +115,7 @@ class Profile extends Component {
               :
                 <img className='' src={dp} id='dp' alt='profile' />
               }
-              <h4 className='center red-text text-lighten-1'>{this.state.profile.name}</h4>
+              <h4 className='center red-text text-lighten-1'>{profile.name}</h4>
               <button onClick={this.logoutHandler} className='btn red darken-2 logout-btn'>Logout<i class="material-icons right">logout</i></button>
              </div>
             </div>
@@ -169,4 +157,12 @@ class Profile extends Component {
     );
   }
 }
-export default Profile;
+const mapStateToProps = (state) =>{
+  return {
+    profile: state.reducedUser.profile,
+  }
+}
+const mapActionsToProps=({
+  getProfile: getProfileAction,
+})
+export default connect(mapStateToProps, mapActionsToProps)(Profile);

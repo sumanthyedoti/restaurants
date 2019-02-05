@@ -18,7 +18,6 @@ const styles = {
 class BookTable extends Component {
   componentDidMount(){
     const bookingForm = document.getElementById('restuarant-modal-form');
-    console.log(bookingForm)
     if(bookingForm){
       bookingForm.elements['table-date'].value = '';
       bookingForm.elements['num-of-guests'].value = 1;
