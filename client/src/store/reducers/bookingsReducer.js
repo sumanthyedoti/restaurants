@@ -6,6 +6,7 @@ const initialState = {
 }
 
 export function fetchBookingsReducer (state=initialState, {type, payload}) {
+  
   switch(type){
     case FETCH_BOOOKINGS:
       return {
@@ -13,8 +14,8 @@ export function fetchBookingsReducer (state=initialState, {type, payload}) {
         bookings: payload.bookings.table,
       }
     case FETCH_RESTAURANTS_BOOOKINGS:
-    let restaurants = state.restaurants;
-    restaurants[payload.id] = payload
+      let restaurants = state.restaurants;
+      restaurants[payload.id] = payload
       return {
         ...state,
         restaurants,

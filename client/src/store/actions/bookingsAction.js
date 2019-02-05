@@ -10,6 +10,23 @@ export function fetchBookingsAction(type) {
     })
       .then((res)=> res.json())
       .then((json) => {
+        if(json.bookings.table.length>0){
+          json.bookings.table.forEach(booking => {
+            fetch(`http://localhost:3000/api/restaurants/${booking.idRestaurant}`, {
+              headers: {
+                "Content-Type": "application/json",
+                "username": localStorage.getItem('username'),
+              }
+            })
+              .then((res)=> res.json())
+              .then((json) => {
+                return dispatch({
+                  type: FETCH_RESTAURANTS_BOOOKINGS,
+                  payload: json.restaurant
+                })
+              })
+          });
+        }
         return dispatch({
           type: FETCH_BOOOKINGS,
           payload: json

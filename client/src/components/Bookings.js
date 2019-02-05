@@ -10,15 +10,17 @@ class Bookings extends Component {
     this.props.fetchBookings();
   }
   componentDidUpdate(){
-    if(this.props.bookings.length>0){
-      this.props.bookings.forEach(booking => {
-        this.props.fetchRestaurantsBooked(booking.idRestaurant);
-      });
-    }
+    // if(this.props.bookings.length>0){
+    //   this.props.bookings.forEach(booking => {
+    //     this.props.fetchRestaurantsBooked(booking.idRestaurant);
+    //   });
+    // }
   }
   render() {
+    console.log(this.props.restaurants)
     const { bookings, restaurants} = this.props;
     let BookingsList = bookings.map( (booking) => {
+      console.log(restaurants[booking.idRestaurant])
       const dateTime = booking.time_and_date.split('&');
       return(
         <div className='' key={booking.idRestaurant}>
