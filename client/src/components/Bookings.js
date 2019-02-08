@@ -6,18 +6,22 @@ import {fetchRestaurantsBookedAction} from '../store/actions/bookingsAction';
 import {connect} from 'react-redux';
 
 class Bookings extends Component {
-  componentDidMount(){
-    this.props.fetchBookings();
+  async componentDidMount(){
+    await this.props.fetchBookings();
   }
   componentDidUpdate(){
-    // if(this.props.bookings.length>0){
-    //   this.props.bookings.forEach(booking => {
-    //     this.props.fetchRestaurantsBooked(booking.idRestaurant);
-    //   });
-    // }
+    if(this.props.bookings.length>0){
+      this.props.bookings.forEach(booking => {
+        this.props.fetchRestaurantsBooked(booking.idRestaurant);
+      });
+    }
   }
   render() {
-    console.log(this.props.restaurants)
+    if(this.props.bookings.length>0) {
+      this.props.bookings.forEach(booking => {
+        this.props.fetchRestaurantsBooked(booking.idRestaurant);
+      });
+    }
     const { bookings, restaurants} = this.props;
     let BookingsList = bookings.map( (booking) => {
       console.log(restaurants[booking.idRestaurant])

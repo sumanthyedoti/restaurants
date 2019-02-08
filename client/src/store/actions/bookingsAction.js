@@ -2,7 +2,8 @@ import {FETCH_BOOOKINGS, FETCH_RESTAURANTS_BOOOKINGS, BOOK_TABLE} from './types'
 
 export function fetchBookingsAction(type) {
   return function (dispatch) {
-    fetch('http://localhost:3000/api/bookings/', {
+    return new Promise((resolve, reject)=>{
+      fetch('http://localhost:3000/api/bookings/', {
       headers: {
         "Content-Type": "application/json",
         "username": localStorage.getItem('username'),
@@ -11,7 +12,8 @@ export function fetchBookingsAction(type) {
       .then((res)=> res.json())
       .then((json) => {
         if(json.bookings.table.length>0){
-          json.bookings.table.forEach(booking => {
+          let bookings = json.bookings.table;
+          bookings.forEach((booking, i) => {
             fetch(`http://localhost:3000/api/restaurants/${booking.idRestaurant}`, {
               headers: {
                 "Content-Type": "application/json",
@@ -20,18 +22,23 @@ export function fetchBookingsAction(type) {
             })
               .then((res)=> res.json())
               .then((json) => {
-                return dispatch({
+                dispatch({
                   type: FETCH_RESTAURANTS_BOOOKINGS,
                   payload: json.restaurant
                 })
+                if(i===bookings.length-1){
+                  resolve('completed');
+                }
               })
           });
         }
-        return dispatch({
+        dispatch({
           type: FETCH_BOOOKINGS,
           payload: json
         })
       })
+    })
+    
   }
 }
 
